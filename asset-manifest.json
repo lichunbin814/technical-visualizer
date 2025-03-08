@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "https://lichunbin814.github.io/technical-visualizer/static/css/main.08a5c903.css",
+    "main.js": "https://lichunbin814.github.io/technical-visualizer/static/js/main.3973a68d.js",
+    "static/js/453.f82cecf9.chunk.js": "https://lichunbin814.github.io/technical-visualizer/static/js/453.f82cecf9.chunk.js",
+    "index.html": "https://lichunbin814.github.io/technical-visualizer/index.html",
+    "main.08a5c903.css.map": "https://lichunbin814.github.io/technical-visualizer/static/css/main.08a5c903.css.map",
+    "main.3973a68d.js.map": "https://lichunbin814.github.io/technical-visualizer/static/js/main.3973a68d.js.map",
+    "453.f82cecf9.chunk.js.map": "https://lichunbin814.github.io/technical-visualizer/static/js/453.f82cecf9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.08a5c903.css",
+    "static/js/main.3973a68d.js"
+  ]
+}
