@@ -1,0 +1,136 @@
+{
+  "title": "ブラウザレンダリングプロセス",
+  "previous": "前へ",
+  "next": "次へ",
+  "animations": {
+    "httpRequest": {
+      "browser": "ブラウザ",
+      "server": "サーバー",
+      "request": "GETリクエスト",
+      "response": "HTMLレスポンス"
+    },
+    "domTree": {
+      "title": "タイトル",
+      "content": "コンテンツ"
+    },
+    "layout": {
+      "viewport": "ビューポート",
+      "reflow": "リフロー",
+      "reflow_desc": "要素の寸法やポジションの変更時に発生します"
+    },
+    "paint": {
+      "canvas": "キャンバス",
+      "title": "タイトルテキスト",
+      "paragraph": "段落コンテンツ",
+      "paintOrder": "描画順序",
+      "layers": {
+        "background": "背景",
+        "borders": "境界線",
+        "text": "テキスト",
+        "shadows": "影"
+      },
+      "rules": {
+        "title": "描画ルール",
+        "backToFront": "後ろから前へ要素を描画",
+        "parentFirst": "子要素の前に親要素を描画",
+        "stackingContext": "重ね合わせコンテキストに従う",
+        "repaintHint": "ヒント：色や背景色のみを変更するとリフローなしで再描画をトリガーします"
+      }
+    },
+    "composite": {
+      "layers": {
+        "background": "背景レイヤー",
+        "content": "コンテンツレイヤー",
+        "ui": "UIレイヤー"
+      },
+      "descriptions": {
+        "background": "ページ背景とベースコンテナ",
+        "content": "テキストと画像コンテンツ",
+        "ui": "ボタン、フォーム、インタラクティブ要素"
+      },
+      "steps": {
+        "title": "コンポジティングプロセス",
+        "createLayers": "レイヤーの作成",
+        "rasterize": "ラスタライズ",
+        "gpuAcceleration": "GPU高速化",
+        "complete": "最終合成完了、表示準備完了"
+      },
+      "gpuHints": {
+        "title": "GPU高速化のヒント",
+        "transform": "transformとopacityの変更はリフローや再描画をトリガーしません",
+        "willChange": "will-changeを使用して、ブラウザに事前にレイヤーを作成するヒントを与えます",
+        "layerUsage": "適切なレイヤー使用でアニメーションパフォーマンスを向上できます"
+      }
+    },
+    "styleProcessing": {
+      "steps": {
+        "downloadParse": "1. CSSファイルのダウンロードと解析",
+        "convertRules": "2. CSSルールをスタイル構造に変換",
+        "calculateSpecificity": "3. 詳細度の計算",
+        "buildCSSOM": "4. CSSOM（CSSオブジェクトモデル）の構築"
+      },
+      "specificity": {
+        "format": "重みの形式：（インラインスタイル、ID、クラス/属性、要素）",
+        "weight": "重み",
+        "comparison": "重みを比較する際は、左から右へ比較し、大きい方が優先されます",
+        "priority": "より高い重みのセレクタが優先されます",
+        "conflict": "スタイルが競合した場合、ブラウザはより高い重みのルールを選択します",
+        "question": "質問：pに異なるスタイルが適用された場合、結果はどうなりますか：",
+        "answer": "回答：テキストは",
+        "result": "赤色"
+      }
+    }
+  },
+  "steps": [
+    {
+      "id": "httpRequest",
+      "title": "1. コンテンツの受信",
+      "description": "ブラウザがリクエストを送信しHTMLを受信する方法",
+      "detailedText": "ユーザーがブラウザにURLを入力すると、次のステップが発生します：\n\nDNS解決：ブラウザはドメイン名サービスに問い合わせ、URLをサーバーのIPアドレスに変換します。\n接続の確立：TCP三方向ハンドシェイクを通じて安定した接続を確立します。\nHTTPリクエスト：ブラウザはブラウザ情報や言語設定を含むヘッダーとともにGETリクエストを送信します。\n\n基本的なフローは以下の通りです：\n1. ブラウザがサーバーにHTTP GETリクエストを送信\n2. サーバーがリクエストを処理し、レスポンスを準備\n3. サーバーがHTMLドキュメントを返す\n4. ブラウザがHTMLコンテンツの受信と処理を開始\n\nこれがレンダリングプロセス全体の最初のステップであり、最も基本的なネットワーク通信リンクです。",
+      "color": "blue"
+    },
+    {
+      "id": "domTree",
+      "title": "2. DOMツリーの構築",
+      "description": "HTMLが解析されDOMスクトラクチャに構築される方法",
+      "detailedText": "ブラウザはHTMLドキュメントをDOM（Document Object Model）ツリーに解析します：\n1. HTMLマークアップをトークンに解析\n2. トークンをノードに変換\n3. ノードをツリー構造に接続\n4. 親子関係と階層を確立\n\nDOMツリーはウェブページコンテンツのプログラム的表現であり、その後の処理の基礎を提供します。",
+      "color": "green"
+    },
+    {
+      "id": "styleProcessing",
+      "title": "3. スタイルの処理",
+      "description": "CSS解析とCSSOM構築プロセス",
+      "detailedText": "ブラウザはCSSスタイルシートを処理します：\n1. CSSファイルのダウンロードと解析\n2. CSSルールをスタイル構造に変換\n3. 詳細度の計算\n4. CSSOM（CSSオブジェクトモデル）の構築\n\nCSSOMは要素の表示方法に関する完全なスタイル情報を提供します。",
+      "color": "purple"
+    },
+    {
+      "id": "renderTree",
+      "title": "4. レンダーツリーの構築",
+      "description": "DOMとCSSOMがレンダーツリーにどのように統合されるか",
+      "detailedText": "DOMツリーとCSSOMをレンダーツリーに結合：\n1. DOMツリーで可視ノードをトラバース\n2. 各可視ノードに対応するCSSOMルールを見つける\n3. マッチするスタイルをノードに適用\n4. 不可視要素（display: none など）を無視\n\nレンダーツリーには表示が必要なコンテンツとそのスタイル情報のみが含まれます。",
+      "color": "orange"
+    },
+    {
+      "id": "layout",
+      "title": "5. レイアウト計算",
+      "description": "要素の位置と寸法の正確な計算プロセス",
+      "detailedText": "ビューポート内の各要素の正確な位置とサイズを計算：\n1. レンダーツリーのルートノードから走査を開始\n2. 各要素の幾何学的情報を計算\n3. ビューポートサイズとレイアウトモードを考慮\n4. 相対的な単位（%、em など）を処理\n\nこのステップはリフローとも呼ばれます。レイアウト関連のプロパティを変更すると再計算がトリガーされます。",
+      "color": "red"
+    },
+    {
+      "id": "paint",
+      "title": "6. 要素の描画",
+      "description": "計算された構造をピクセルに変換するプロセス",
+      "detailedText": "レイアウト情報を実際のピクセルに変換：\n1. レイヤーを作成\n2. ピクセルデータを埋める\n3. 色や画像などの視覚的プロパティを処理\n4. 視覚効果（影や角丸など）を適用\n\nこのフェーズで各要素の視覚的外観が決定されます。視覚的プロパティを変更すると再描画がトリガーされます。",
+      "color": "yellow"
+    },
+    {
+      "id": "composite",
+      "title": "7. 合成と表示",
+      "description": "レイヤーを合成し画面に最終表示するプロセス",
+      "detailedText": "すべてのレイヤーを最終的な画面に合成：\n1. レイヤーを個別に描画\n2. レイヤー順序を決定\n3. GPUを通じてレイヤーを合成\n4. 最終結果を画面に表示\n\ntransformやopacityなどのプロパティを使用することで、合成のみでアニメーションを実現でき、より良いパフォーマンスが得られます。",
+      "color": "teal"
+    }
+  ],
+  "totalSteps": 7
+}

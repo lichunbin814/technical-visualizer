@@ -1,0 +1,136 @@
+{
+    "title": "瀏覽器渲染流程",
+    "next": "下一步",
+    "previous": "上一步",
+    "animations": {
+      "httpRequest": {
+        "browser": "瀏覽器",
+        "server": "伺服器",
+        "request": "GET請求",
+        "response": "HTML回應"
+      },
+      "domTree": {
+        "title": "標題",
+        "content": "內容"
+      },
+      "layout": {
+        "viewport": "視口",
+        "reflow": "重排",
+        "reflow_desc": "當元素的尺寸或位置改變時會觸發"
+      },
+      "paint": {
+        "canvas": "畫布",
+        "title": "標題文字",
+        "paragraph": "段落內容",
+        "paintOrder": "繪製順序",
+        "layers": {
+          "background": "背景",
+          "borders": "邊框",
+          "text": "文字",
+          "shadows": "陰影"
+        },
+        "rules": {
+          "title": "繪製規則",
+          "backToFront": "由後到前繪製元素",
+          "parentFirst": "先繪製父元素再繪製子元素",
+          "stackingContext": "遵循層疊上下文 (Stacking Context)",
+          "repaintHint": "提示：僅修改 color 或 background-color 只會觸發重繪（Repaint），而不會觸發重排（Reflow）"
+        }
+      },
+      "composite": {
+        "layers": {
+          "background": "背景層",
+          "content": "內容層",
+          "ui": "UI層"
+        },
+        "descriptions": {
+          "background": "頁面背景和基礎容器",
+          "content": "文字和圖片內容",
+          "ui": "按鈕、表單等交互元素"
+        },
+        "steps": {
+          "title": "合成處理",
+          "createLayers": "建立圖層",
+          "rasterize": "光柵化處理",
+          "gpuAcceleration": "GPU加速合成",
+          "complete": "最終畫面合成完成，準備顯示"
+        },
+        "gpuHints": {
+          "title": "GPU 加速提示",
+          "transform": "transform 和 opacity 屬性變更不會觸發重排或重繪",
+          "willChange": "使用 will-change 提示瀏覽器提前建立圖層",
+          "layerUsage": "合理使用圖層可以提高動畫性能"
+        }
+      },
+      "styleProcessing": {
+        "steps": {
+          "downloadParse": "1. 下載並解析CSS文件",
+          "convertRules": "2. 將CSS規則轉換為樣式結構",
+          "calculateSpecificity": "3. 計算特定性（Specificity）",
+          "buildCSSOM": "4. 建立CSSOM（CSS Object Model）"
+        },
+        "specificity": {
+          "format": "權重格式：(內聯樣式,ID,類/屬性,元素)",
+          "weight": "權重",
+          "comparison": "權重比較時，從左到右逐位比較，較大的優先",
+          "priority": "權重越高的選擇器，其樣式優先套用",
+          "conflict": "當出現樣式衝突時，瀏覽器選擇權重高的規則",
+          "question": "Q：不同的樣式，如果都套用到p身上，結果會是什麼呢：",
+          "answer": "Answer：文字會顯示為",
+          "result": "紅色"
+        }
+      }
+    },
+    "steps": [
+      {
+        "id": "httpRequest",
+        "title": "1. 接收內容",
+        "description": "瀏覽器如何發送請求並接收HTML",
+        "detailedText": "當使用者在瀏覽器輸入網址後，會經過以下步驟：\n\nDNS解析：瀏覽器首先查詢域名解析服務，將網址轉換成伺服器IP地址。\n建立連線：透過TCP三次握手建立穩定連線。\n發送HTTP請求：瀏覽器發送包含瀏覽器資訊與語言偏好等標頭的GET請求。\n\n接著進入基本流程：\n1. 瀏覽器發送HTTP GET請求到伺服器\n2. 伺服器處理請求並準備回應\n3. 伺服器回傳HTML文件\n4. 瀏覽器開始接收並處理HTML內容\n\n這是整個渲染過程的第一步，也是最基礎的網路通訊環節。",
+        "color": "blue"
+      },
+      {
+        "id": "domTree",
+        "title": "2. 構建DOM樹",
+        "description": "HTML如何被解析並構建成DOM結構",
+        "detailedText": "瀏覽器將HTML文件解析為DOM（Document Object Model）樹：\n1. 解析HTML標記為標記化器（tokens）\n2. 將標記轉換為節點（nodes）\n3. 將節點連接成樹狀結構\n4. 建立父子關係和層級結構\n\nDOM樹是網頁內容的程式化表示，為後續處理提供基礎。",
+        "color": "green"
+      },
+      {
+        "id": "styleProcessing",
+        "title": "3. 處理樣式",
+        "description": "CSS解析和CSSOM構建過程",
+        "detailedText": "瀏覽器處理CSS樣式表：\n1. 下載並解析CSS文件\n2. 將CSS規則轉換為樣式結構\n3. 計算特定性（Specificity）\n4. 建立CSSOM（CSS Object Model）\n\nCSSOM提供了元素如何展示的完整樣式信息。",
+        "color": "purple"
+      },
+      {
+        "id": "renderTree",
+        "title": "4. 建立渲染樹",
+        "description": "DOM和CSSOM如何合併成渲染樹",
+        "detailedText": "將DOM樹和CSSOM合併為渲染樹：\n1. 遍歷DOM樹的可見節點\n2. 為每個可見節點找到對應的CSSOM規則\n3. 將匹配的樣式應用到節點\n4. 忽略不可見的元素（如display: none）\n\n渲染樹只包含需要顯示的內容及其樣式信息。",
+        "color": "orange"
+      },
+      {
+        "id": "layout",
+        "title": "5. 計算布局",
+        "description": "元素位置和尺寸的精確計算過程",
+        "detailedText": "計算每個元素在視口中的確切位置和大小：\n1. 從渲染樹的根節點開始遍歷\n2. 計算每個元素的幾何信息\n3. 考慮視口大小和佈局模式\n4. 處理相對單位（如%、em）\n\n這個步驟也被稱為重排（reflow）。改變佈局相關屬性會觸發重新計算。",
+        "color": "red"
+      },
+      {
+        "id": "paint",
+        "title": "6. 繪製元素",
+        "description": "將計算好的結構轉換為像素的過程",
+        "detailedText": "將佈局信息轉換為實際的像素：\n1. 創建圖層（layers）\n2. 填充像素數據\n3. 處理顏色、圖像等視覺屬性\n4. 應用視覺效果（如陰影、圓角）\n\n這個階段決定了每個元素的視覺外觀。改變視覺屬性會觸發重繪。",
+        "color": "yellow"
+      },
+      {
+        "id": "composite",
+        "title": "7. 合成與顯示",
+        "description": "層的合成與最終呈現在屏幕上的過程",
+        "detailedText": "將所有圖層合成為最終畫面：\n1. 將圖層分別繪製\n2. 確定圖層順序\n3. 通過GPU合成圖層\n4. 將最終結果顯示在屏幕上\n\n使用transform和opacity等屬性可以實現僅合成的動畫，效能較好。",
+        "color": "teal"
+      }
+    ],
+    "totalSteps": 7
+}

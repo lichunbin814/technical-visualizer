@@ -1,0 +1,136 @@
+{
+    "title": "Browser Rendering Process",
+    "next": "Next",
+    "previous": "Previous",
+    "animations": {
+      "httpRequest": {
+        "browser": "Browser",
+        "server": "Server",
+        "request": "GET Request",
+        "response": "HTML Response"
+      },
+      "domTree": {
+        "title": "Title",
+        "content": "Content"
+      },
+      "layout": {
+        "viewport": "Viewport",
+        "reflow": "Reflow",
+        "reflow_desc": "Triggered when element dimensions or position changes"
+      },
+      "paint": {
+        "canvas": "Canvas",
+        "title": "Title Text",
+        "paragraph": "Paragraph Content",
+        "paintOrder": "Paint Order",
+        "layers": {
+          "background": "Background",
+          "borders": "Borders",
+          "text": "Text",
+          "shadows": "Shadows"
+        },
+        "rules": {
+          "title": "Paint Rules",
+          "backToFront": "Paint elements from back to front",
+          "parentFirst": "Paint parent elements before children",
+          "stackingContext": "Follow Stacking Context",
+          "repaintHint": "Tip: Modifying only color or background-color triggers Repaint without Reflow"
+        }
+      },
+      "composite": {
+        "layers": {
+          "background": "Background Layer",
+          "content": "Content Layer",
+          "ui": "UI Layer"
+        },
+        "descriptions": {
+          "background": "Page background and base containers",
+          "content": "Text and image content",
+          "ui": "Buttons, forms and interactive elements"
+        },
+        "steps": {
+          "title": "Compositing Process",
+          "createLayers": "Create Layers",
+          "rasterize": "Rasterization",
+          "gpuAcceleration": "GPU Acceleration",
+          "complete": "Final composition complete, ready for display"
+        },
+        "gpuHints": {
+          "title": "GPU Acceleration Tips",
+          "transform": "Changes to transform and opacity don't trigger reflow or repaint",
+          "willChange": "Use will-change to hint browsers to create layers in advance",
+          "layerUsage": "Proper layer usage can improve animation performance"
+        }
+      },
+      "styleProcessing": {
+        "steps": {
+          "downloadParse": "1. Download and Parse CSS Files",
+          "convertRules": "2. Convert CSS Rules to Style Structures",
+          "calculateSpecificity": "3. Calculate Specificity",
+          "buildCSSOM": "4. Build CSSOM (CSS Object Model)"
+        },
+        "specificity": {
+          "format": "Weight format: (inline styles, ID, class/attributes, elements)",
+          "weight": "Weight",
+          "comparison": "When comparing weights, compare from left to right, larger takes precedence",
+          "priority": "Selectors with higher weight get priority",
+          "conflict": "When styles conflict, browser chooses rule with higher weight",
+          "question": "Q: When different styles are applied to p, what will be the result:",
+          "answer": "Answer: The text will be",
+          "result": "red"
+        }
+      }
+    },
+    "steps": [
+      {
+        "id": "httpRequest",
+        "title": "1. Receiving Content",
+        "description": "How the browser sends requests and receives HTML",
+        "detailedText": "When a user enters a URL in the browser, the following steps occur:\n\nDNS Resolution: The browser first queries the Domain Name Service to convert the URL into a server IP address.\nConnection Setup: Establish a stable connection through TCP three-way handshake.\nHTTP Request: Browser sends a GET request with headers including browser information and language preferences.\n\nThen the basic flow begins:\n1. The browser sends an HTTP GET request to the server\n2. The server processes the request and prepares a response\n3. The server returns an HTML document\n4. The browser starts receiving and processing the HTML content\n\nThis is the first step in the entire rendering process, and also the most basic network communication link.",
+        "color": "blue"
+      },
+      {
+        "id": "domTree",
+        "title": "2. Building the DOM Tree",
+        "description": "How HTML is parsed and built into a DOM structure",
+        "detailedText": "The browser parses the HTML document into a DOM (Document Object Model) tree:\n1. Parse HTML markup into tokens\n2. Convert tokens into nodes\n3. Connect nodes into a tree structure\n4. Establish parent-child relationships and hierarchy\n\nThe DOM tree is a programmatic representation of the web page content, providing the foundation for subsequent processing.",
+        "color": "green"
+      },
+      {
+        "id": "styleProcessing",
+        "title": "3. Processing Styles",
+        "description": "CSS parsing and CSSOM building process",
+        "detailedText": "The browser processes CSS stylesheets:\n1. Download and parse CSS files\n2. Convert CSS rules into style structures\n3. Calculate specificity\n4. Build the CSSOM (CSS Object Model)\n\nThe CSSOM provides complete style information on how elements should be displayed.",
+        "color": "purple"
+      },
+      {
+        "id": "renderTree",
+        "title": "4. Building the Render Tree",
+        "description": "How DOM and CSSOM are merged into a render tree",
+        "detailedText": "Combining the DOM tree and CSSOM into a render tree:\n1. Traverse visible nodes in the DOM tree\n2. Find corresponding CSSOM rules for each visible node\n3. Apply matching styles to nodes\n4. Ignore invisible elements (such as display: none)\n\nThe render tree only contains content that needs to be displayed and its style information.",
+        "color": "orange"
+      },
+      {
+        "id": "layout",
+        "title": "5. Layout Calculation",
+        "description": "The precise calculation process for element positions and dimensions",
+        "detailedText": "Calculate the exact position and size of each element in the viewport:\n1. Start traversing from the root node of the render tree\n2. Calculate geometric information for each element\n3. Consider viewport size and layout mode\n4. Process relative units (such as %, em)\n\nThis step is also known as reflow. Changing layout-related properties triggers recalculation.",
+        "color": "red"
+      },
+      {
+        "id": "paint",
+        "title": "6. Painting Elements",
+        "description": "The process of converting calculated structures into pixels",
+        "detailedText": "Convert layout information into actual pixels:\n1. Create layers\n2. Fill pixel data\n3. Process visual properties such as colors, images\n4. Apply visual effects (such as shadows, rounded corners)\n\nThis phase determines the visual appearance of each element. Changing visual properties triggers repainting.",
+        "color": "yellow"
+      },
+      {
+        "id": "composite",
+        "title": "7. Compositing and Display",
+        "description": "The process of compositing layers and final presentation on screen",
+        "detailedText": "Compose all layers into the final screen:\n1. Paint layers separately\n2. Determine layer order\n3. Composite layers through GPU\n4. Display the final result on the screen\n\nUsing properties like transform and opacity can achieve animation with only compositing, which has better performance.",
+        "color": "teal"
+      }
+    ],
+    "totalSteps": 7
+}
